@@ -131,12 +131,17 @@ def create_import():
 @expects_json(citizen_update_schema)
 def update_citizen_from_import(import_id, citizen_id):
     imprt = import_collection.find_one({'import_id': import_id})
+    citizen_ids = set(map(lambda t: t['citizen_id'], imprt['citizens']))
     if not imprt:
         abort(404)
     if 'birth_date' in request.json:
         validate_birth_date(request.json['birth_date'])
     if 'relatives' in request.json:
-        new_rel_ids = set(request.json['relatives'])
+        relatives = request.json['relatives']
+        for id in relatives:
+            if id not in citizen_ids:
+                abort(400)
+        new_rel_ids = set(relatives)
         old_rel_ids = set(import_collection.find_one({'import_id': import_id, 'citizens.citizen_id': citizen_id},
                                                      {'citizens.$': 1})['citizens'][0]['relatives'])
         for id in old_rel_ids - new_rel_ids:
