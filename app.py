@@ -24,7 +24,7 @@ citizen_properties = {
     'town': {'type': 'string', 'pattern': r'.*\w.*'},
     'street': {'type': 'string', 'pattern': r'.*\w.*'},
     'building': {'type': 'string', 'pattern': r'.*\w.*'},
-    'apartment': {'type': 'number', 'pattern': r'.*\w.*'},
+    'apartment': {'type': 'number', "minimum": 0},
     'name': {'type': 'string', 'minLength': 1},
     'birth_date': {'type': 'string', 'pattern': r'\d\d\.\d\d\.\d\d\d\d'},
     'gender': {'enum': ['male', 'female']},
@@ -35,7 +35,7 @@ citizen_properties = {
     }
 }
 
-citizen_properties_with_id = dict(citizen_properties, citizen_id={'type': 'number'})
+citizen_properties_with_id = dict(citizen_properties, citizen_id={'type': 'number', "minimum": 0})
 
 import_schema = {
     'type': 'object',
@@ -97,7 +97,7 @@ def validate_relatives_and_ids(citizens):
 
 
 def calculate_age(born):
-    today = datetime.date.today()
+    today = datetime.datetime.utcnow()
     return today.year - int(born[6:10]) - ((today.month, today.day) < (int(born[3:5]), int(born[0:2])))
 
 
@@ -192,7 +192,7 @@ def get_statistics(import_id):
         p50 = np.percentile(arr, 50, interpolation='linear')
         p75 = np.percentile(arr, 75, interpolation='linear')
         p99 = np.percentile(arr, 99, interpolation='linear')
-        res.append({'town': key, 'p50': p50, 'p75': p75, 'p99': p99})
+        res.append({'town': key, 'p50': format(p50, '.2f'), 'p75': format(p75, '.2f'), 'p99': format(p99, '.2f')})
 
     return jsonify({'data': res}), 200
 
