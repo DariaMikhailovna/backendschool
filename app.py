@@ -98,7 +98,8 @@ def validate_relatives_and_ids(citizens):
 
 def calculate_age(born):
     today = datetime.datetime.utcnow()
-    return today.year - int(born[6:10]) - ((today.month, today.day) < (int(born[3:5]), int(born[0:2])))
+    didnt_have_birthday_this_year = ((today.month, today.day) < (int(born[3:5]), int(born[0:2])))
+    return today.year - int(born[6:10]) - didnt_have_birthday_this_year
 
 
 @app.errorhandler(400)
