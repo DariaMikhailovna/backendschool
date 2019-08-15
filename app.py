@@ -176,7 +176,7 @@ def get_birthdays(import_id):
         abort(404)
     d = {str(month): defaultdict(int) for month in range(1, 13)}
     for citizen in imprt['citizens']:
-        cur_d = d[citizen['birth_date'][3:5]]
+        cur_d = d[str(int(citizen['birth_date'][3:5]))]
         for relative_id in citizen['relatives']:
             cur_d[relative_id] += 1
     result = {month: [{'citizen_id': id, 'presents': cur_d[id]} for id in cur_d] for month, cur_d in d.items()}
