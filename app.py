@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from flask import Flask, jsonify, abort, request, make_response
 from pymongo import MongoClient, errors
 import numpy as np
