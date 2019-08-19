@@ -23,11 +23,11 @@ if not counters_collection.find_one({'id': 0}):
     )
 
 citizen_properties = {
-    'town': {'type': 'string', 'pattern': r'.*\w.*'},
-    'street': {'type': 'string', 'pattern': r'.*\w.*'},
-    'building': {'type': 'string', 'pattern': r'.*\w.*'},
+    'town': {'type': 'string', 'maxLength': 256, 'pattern': r'.*\w.*'},
+    'street': {'type': 'string', 'maxLength': 256, 'pattern': r'.*\w.*'},
+    'building': {'type': 'string', 'maxLength': 256, 'pattern': r'.*\w.*'},
     'apartment': {'type': 'number', "minimum": 0},
-    'name': {'type': 'string', 'minLength': 1},
+    'name': {'type': 'string', 'minLength': 1, 'maxLength': 256},
     'birth_date': {'type': 'string', 'pattern': r'\d\d\.\d\d\.\d\d\d\d'},
     'gender': {'enum': ['male', 'female']},
     'relatives': {
