@@ -8,7 +8,8 @@
 5) pytest: https://docs.pytest.org/en/latest/contents.html                  (тесты)
 
 Инструкция по развертыванию тестов:
-1) Запустить app.py (если не запущена)
-2) В терминале набрать: py.test -v
-3) Ждать
-4) FAILED - не прошло, PASSED - прошло
+1) Установить pytest: $ pip install pytest==2.9.1 
+2) Запустить app.py (если не запущена): $ python3 app.py
+3) В терминале набрать: py.test -v
+4) Ждать
+5) FAILED - не прошло, PASSED - прошло
