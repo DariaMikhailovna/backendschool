@@ -81,7 +81,9 @@ def insert_import(imp):
 def validate_birth_date(date):
     numbers = list(map(int, date.split('.')))
     try:
-        datetime.date(numbers[2], numbers[1], numbers[0])
+        date = datetime.date(numbers[2], numbers[1], numbers[0])
+        if date >= datetime.date.today():
+            abort(400)
     except ValueError:
         abort(400)
 
